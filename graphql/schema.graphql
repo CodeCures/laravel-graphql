@@ -46,7 +46,7 @@ type Mutation {
     id: ID!
     title: String! @rules(apply: ["required", "min:3"])
     body: String! @rules(apply: ["required", "min:3"])
-  ) : Post @updated
+  ) : Post @update
   deletePost(
     id: ID!
   ) : Post @delete
