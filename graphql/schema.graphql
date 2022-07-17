@@ -25,8 +25,10 @@ type Query {
       id: ID @eq
 
       "Search by title."
-      title: String @eq 
+      slug: String @eq 
     ): Post @find
+
+    
 
     "List multiple posts."
     posts(
@@ -42,6 +44,13 @@ type Mutation {
     title: String! @rules(apply: ["required", "min:3"])
     body: String! @rules(apply: ["required", "min:3"])
   ) : Post @create
+
+  createPostResolver(
+    user_id: ID!
+    title: String! @rules(apply: ["required", "min:3"])
+    body: String! @rules(apply: ["required", "min:3"])
+  ) : Post @field(resolver: "App\\GraphQL\\Mutations\\CreatePostResolver")
+
   updatePost(
     id: ID!
     title: String! @rules(apply: ["required", "min:3"])
@@ -67,6 +76,7 @@ type User {
 type Post {
     id: ID!
     title: String!
+    slug: String
     body: String!
     user: User! @belongsTo
     created_at: DateTime!
